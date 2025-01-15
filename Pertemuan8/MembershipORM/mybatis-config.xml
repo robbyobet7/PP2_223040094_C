@@ -1,0 +1,20 @@
+<?xml version= "l.0" encoding= "UTF-8" )
+<!DOCTYPE configuration
+    PUBLIC "- //mybatis.org//DTD Config 3.0//EN"
+    "http ://m batis.or /dtd/m batis-3-confi .dtd">
+<configuration>
+    <environments default= "development" >
+        <environment id= "development" >
+            <transactionManager type= "JDBC'' />
+            <dataSou rce type= "POOLED" >
+                <property name= "driver" value= "com.mysql.cj.jdbc.Driver" />
+                <property name= "url" value= http://localhost/phpmyadmin/index.php?route=/database/structure&db=pp2_membership" />
+                <property name= "username" value= "root" />
+                <property name= "pass1•1ord" value= "" />
+            </dataSource>
+        </environment>
+    </environments>
+    <mappers>
+        <package name= "mapper" />
+    </mappers>
+</configuration>
