@@ -1,0 +1,57 @@
+import javax.swing.*;
+import java.awt.*;
+
+public class MainFrame {
+    public static void main(String[] args) {
+        // Membuat frame utama
+        SwingUtilities.invokeLater(() -> {
+            JFrame frame = new JFrame("Contoh Konkurensi di Swing - Latihan 2");
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setSize(400, 200);
+            frame.setLayout(new BorderLayout());
+
+            // Label untuk status
+            JLabel statusLabel = new JLabel("Tekan tombol untuk mulai tugas berat", JLabel.CENTER);
+
+            // Tombol untuk memulai proses
+            JButton startButton = new JButton("Mulai");
+
+            // Progress bar
+            JProgressBar progressBar = new JProgressBar(0, 60);
+            progressBar.setValue(0);
+            progressBar.setStringPainted(true);
+
+            // Tambahkan komponen ke frame
+            frame.add(statusLabel, BorderLayout.NORTH);
+            frame.add(progressBar, BorderLayout.CENTER);
+            frame.add(startButton, BorderLayout.SOUTH);
+
+            // Tombol Aksi
+            startButton.addActionListener(e -> {
+                // Menjalankan proses berat di thread terpisah
+                Thread workerThread = new Thread(() -> {
+                    for (int i = 0; i <= 60; i++) {
+                        try {
+                            Thread.sleep(1000); // Simulasi tugas berat
+                        } catch (InterruptedException ex) {
+                            System.err.println(ex.getMessage());
+                        }
+
+                        // Update progress bar di Event Dispatch Thread
+                        int progress = i;
+                        SwingUtilities.invokeLater(() -> progressBar.setValue(progress));
+                    }
+
+                    // Update status di Event Dispatch Thread setelah selesai
+                    SwingUtilities.invokeLater(() -> statusLabel.setText("Tugas selesai!"));
+                });
+
+                workerThread.start();
+            });
+
+            // Tampilkan Frame
+            frame.setLocationRelativeTo(null);
+            frame.setVisible(true);
+        });
+    }
+}
